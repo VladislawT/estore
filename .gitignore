@@ -11,10 +11,9 @@ out-tsc/
 tmp/
 
 # Файлы Angular
-*.js
-*.js.map
-*.d.ts
-.angular/
+estore-client/**/*.js
+estore-client/**/*.js.map
+estore-client/**/*.d.ts
 estore-client/.angular/
 
 # Файлы логов
