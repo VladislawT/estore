@@ -1,0 +1,10 @@
+<div class="w-full px-4">
+  <div class="flex gap-[30px]">
+    <div class="w-full sm:w-[300px] shrink-0 max-h-[500px]">
+      <app-sidenavigation (subCategoryClicked)="onSelectSubcategory($event)"></app-sidenavigation>
+    </div>
+    <div class="flex-1 min-w-0 mx-auto">
+      <app-products></app-products>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+@tailwind utilities;
+
+.link-hover {
+  @apply text-gray-700 font-medium relative inline-block after:block after:bg-blue-500;
+}

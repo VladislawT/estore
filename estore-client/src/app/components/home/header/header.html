@@ -1,0 +1,81 @@
+<div class="w-full shadow-lg shadow-gray-500/50 bg-gray-900">
+  <div class="flex items-center justify-between align-middle">
+    <div class="text-white ml-2 p-3">
+      <h1 class="text-xl font-bold">eStore</h1>
+    </div>
+    @if (displaySerch()) {
+      <div class="p-0 w-[50%] h-10 bg-white flex items-center">
+        <select
+          #categoryOptions
+          class="w-auto bg-gray-300 h-full border-none font-semibold px-2 pr-5"
+          name=""
+          id=""
+          (change)="onClickSearch(keyword.value, categoryOptions.value)"
+        >
+          @for (category of categoryStore.topLevelCategories(); track category.id) {
+            <option [value]="category.id">{{ category.category }}</option>
+          }
+        </select>
+        <input
+          #keyword
+          class="w-[90%] h-full inline-block border-none outline-none px-3"
+          placeholder="Поиск"
+          (keyup.enter)="onClickSearch(keyword.value, categoryOptions.value)"
+        />
+        <button
+          (click)="onClickSearch(keyword.value, categoryOptions.value)"
+          class="w-[6%] h-10 border-none flex justify-center items-center cursor-pointer"
+        >
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+    }
+    <div class="flex items-center w-[27%] gap-6 heigth justify-end h-full">
+      @if (!isUserAuthenticated()) {
+        <div class="flex items-center gap-2 text-white">
+          <a routerLink="/home/login" class="text-white no-underline flex items-center gap-2.5 hover:underline">
+            <fa-icon [icon]="faUserCircle" class="text-[1.3em]"></fa-icon>
+            <h5>Войти/Зарегистрироватся</h5>
+          </a>
+        </div>
+      }
+      @if (isUserAuthenticated()) {
+        <div class="relative inline-block text-left">
+          <button
+            (click)="toggleDropdown()"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-700"
+          >
+            <fa-icon [icon]="faUserCircle" class="text-[1.3rem]"></fa-icon>
+            {{ userName() }}
+            <fa-icon [icon]="faChevronDown"></fa-icon>
+          </button>
+          @if (dropdownVisable) {
+            <div class="absolute right-0 mt-2 w-36 bg-white rounded-b-md border">
+              <ul class="py-1 text-sm text-gray-600">
+                <a class="px-4 py-2" (click)="logout()">Logout</a>
+              </ul>
+            </div>
+          }
+        </div>
+      }
+      <div class="relative flex items-center">
+        <button
+          type="button"
+          class="flex items-center justify-center text-white p-2 mr-5 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
+          (click)="navigateToCart()"
+        >
+          <fa-icon [icon]="faShoppingCart" class="text-[1.3em]"></fa-icon>
+        </button>
+
+        @if (cart.cart()) {
+          @if (cart.totalProducts() > 0) {
+            <span
+              class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
+              >{{ cart.totalProducts() }}</span
+            >
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

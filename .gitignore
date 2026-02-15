@@ -1,0 +1,67 @@
+# Директории зависимостей
+node_modules/
+estore-client/node_modules/
+estore-server/node_modules/
+
+# Директории сборки
+dist/
+estore-client/dist/
+estore-server/dist/
+out-tsc/
+tmp/
+
+# Файлы Angular
+*.js
+*.js.map
+*.d.ts
+.angular/
+estore-client/.angular/
+
+# Файлы логов
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Директории тестового покрытия
+coverage/
+.nyc_output/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Файлы окружения (важно! содержат пароли к БД)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Секретные ключи и сертификаты
+*.pem
+*.key
+*.crt
+*.p12
+
+# Кеши различных инструментов
+.cache/
+.parcel-cache/
+.rpt2_cache/
+.rts2_cache_*
+.eslintcache
+.stylelintcache
+
+# Файлы, специфичные для ОС
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
