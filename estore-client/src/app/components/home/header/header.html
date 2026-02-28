@@ -50,9 +50,21 @@
             <fa-icon [icon]="faChevronDown"></fa-icon>
           </button>
           @if (dropdownVisable) {
-            <div class="absolute right-0 mt-2 w-36 bg-white rounded-b-md border">
+            <div class="absolute right-0 mt-2 w-36 bg-white rounded-b-md border z-100">
               <ul class="py-1 text-sm text-gray-600">
-                <a class="px-4 py-2" (click)="logout()">Logout</a>
+                <a
+                  routerLink="/home/orders"
+                  class="block px-4 py-2 hover:bg-gray-100 cursor-pointer no-underline text-inherit"
+                  (click)="toggleDropdown()"
+                >
+                  История заказов
+                </a>
+                <a
+                  class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  (click)="logout()"
+                >
+                  Выход
+                </a>
               </ul>
             </div>
           }
@@ -61,20 +73,33 @@
       <div class="relative flex items-center">
         <button
           type="button"
-          class="flex items-center justify-center text-white p-2 mr-5 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
+          class="relative flex items-center justify-center text-white p-2 mr-2 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
+          routerLink="/home/wishlist"
+          [title]="'Избранное'"
+        >
+          <fa-icon [icon]="faHeart" class="text-[1.3em]"></fa-icon>
+          @if (wishlist.totalItems() > 0) {
+            <span
+              class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-red-500 rounded-full w-5 h-5"
+              >{{ wishlist.totalItems() }}</span
+            >
+          }
+        </button>
+        <button
+          type="button"
+          class="relative flex items-center justify-center text-white p-2 mr-5 rounded-full bg-gray-700 hover:bg-gray-800 transition-colors cursor-pointer"
           (click)="navigateToCart()"
         >
           <fa-icon [icon]="faShoppingCart" class="text-[1.3em]"></fa-icon>
-        </button>
-
-        @if (cart.cart()) {
-          @if (cart.totalProducts() > 0) {
-            <span
-              class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
-              >{{ cart.totalProducts() }}</span
-            >
+          @if (cart.cart()) {
+            @if (cart.totalProducts() > 0) {
+              <span
+                class="absolute -top-1 -right-1 flex items-center justify-center text-[0.7rem] font-semibold text-white bg-amber-500 rounded-full w-5 h-5"
+                >{{ cart.totalProducts() }}</span
+              >
+            }
           }
-        }
+        </button>
       </div>
     </div>
   </div>

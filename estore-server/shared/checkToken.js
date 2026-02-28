@@ -8,7 +8,8 @@ const checkToken = async (req, res, next) => {
                         message: "No token provided",
                   });
             }
-            await jwt.verify(token, "estore-secret-key");
+            const decoded = await jwt.verify(token, "estore-secret-key");
+            req.user = decoded;
 
             next();
       } catch (error) {

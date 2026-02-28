@@ -1,0 +1,59 @@
+<ng-container>
+  @if (!wishlistStore.wishlist().length) {
+    <div
+      class="w-[90%] mx-auto my-12 p-8 flex flex-col items-center justify-center bg-gray-50 rounded-xl shadow-md min-h-[20em]"
+    >
+      <fa-icon [icon]="faHeart" class="text-[70px] text-gray-300 mb-4"></fa-icon>
+      <p class="text-2xl font-semibold text-gray-600">Ваш список желаний пуст</p>
+      <p class="text-gray-500 mt-2">Добавляйте понравившиеся товары, нажав на сердечко</p>
+      <button
+        type="button"
+        class="mt-6 bg-amber-400 hover:bg-amber-500 text-black font-semibold px-6 py-2 rounded-full cursor-pointer transition-colors"
+        (click)="navigateToProducts()"
+      >
+        Перейти к покупкам
+      </button>
+    </div>
+  } @else {
+    <div class="w-[90%] max-w-5xl mx-auto my-12">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">Избранное</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (product of wishlistStore.wishlist(); track product.id) {
+          <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow">
+            <a routerLink="/home/product/{{ product.id }}" class="block">
+              <img
+                [src]="'assets/images/' + product.product_img"
+                [alt]="product.product_name"
+                class="w-full object-cover"
+              />
+              <div class="p-4">
+                <h3 class="font-semibold text-gray-800 line-clamp-2">{{ product.product_name }}</h3>
+                <app-ratings [score]="product.ratings"></app-ratings>
+                <p class="text-lg font-bold text-amber-600 mt-2">{{ product.price | currency }}</p>
+              </div>
+            </a>
+            <div class="p-4 pt-0 flex gap-2">
+              <button
+                type="button"
+                class="flex-1 flex items-center justify-center gap-2 py-2 bg-black text-white rounded-lg hover:bg-gray-800 cursor-pointer transition-colors text-sm font-medium"
+                (click)="addToCart(product)"
+              >
+                <fa-icon [icon]="faShoppingCart"></fa-icon>
+                В корзину
+              </button>
+              <button
+                type="button"
+                class="p-2 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
+                (click)="removeFromWishlist(product)"
+                title="Удалить из избранного"
+              >
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</ng-container>

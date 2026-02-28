@@ -1,0 +1,82 @@
+<ng-container>
+  @if (loading()) {
+    <div class="w-[90%] mx-auto my-12 p-8 text-center">
+      <p class="text-gray-600 text-lg">Загрузка заказов...</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div class="w-[90%] mx-auto my-12 p-8 bg-red-50 rounded-xl shadow-md text-center">
+      <p class="text-red-600 text-lg">{{ errorMessage() }}</p>
+      <button
+        type="button"
+        class="mt-4 bg-amber-400 hover:bg-amber-500 text-black font-semibold px-6 py-2 rounded-full cursor-pointer"
+        (click)="loadOrders()"
+      >
+        Повторить
+      </button>
+    </div>
+  } @else if (!orders().length) {
+    <div
+      class="w-[90%] mx-auto my-12 p-8 flex flex-col items-center justify-center bg-gray-50 rounded-xl shadow-md"
+    >
+      <fa-icon [icon]="faBoxOpen" class="text-[70px] text-gray-400 mb-4"></fa-icon>
+      <p class="text-2xl font-semibold text-gray-600">У вас пока нет заказов</p>
+      <p class="text-gray-500 mt-2">Совершите первую покупку!</p>
+      <button
+        type="button"
+        class="mt-6 bg-amber-400 hover:bg-amber-500 text-black font-semibold px-6 py-2 rounded-full cursor-pointer"
+        (click)="navigateToProducts()"
+      >
+        Перейти к покупкам
+      </button>
+    </div>
+  } @else {
+    <div class="w-[90%] max-w-4xl mx-auto my-12">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">История заказов</h1>
+
+      <div class="space-y-4">
+        @for (order of orders(); track order.orderId) {
+          <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+            <button
+              type="button"
+              class="w-full flex items-center justify-between p-4 hover:bg-gray-50 text-left cursor-pointer"
+              (click)="toggleOrderDetails(order.orderId)"
+            >
+              <div class="flex flex-wrap gap-4 items-center">
+                <span class="font-bold text-gray-800">Заказ #{{ order.orderId }}</span>
+                <span class="text-gray-600">{{ order.orderDate }}</span>
+                <span class="text-lg font-semibold text-amber-600">{{ order.total | currency }}</span>
+              </div>
+              <fa-icon
+                [icon]="isExpanded(order.orderId) ? faChevronUp : faChevronDown"
+                class="text-gray-500"
+              ></fa-icon>
+            </button>
+
+            @if (isExpanded(order.orderId)) {
+              <div class="border-t border-gray-200 bg-gray-50 p-4">
+                <div class="mb-4 text-sm text-gray-600">
+                  <p><strong>Адрес доставки:</strong></p>
+                  <p>{{ order.userName }}, {{ order.address }}, {{ order.city }}, {{ order.state }} {{ order.pin }}</p>
+                </div>
+
+                <div class="space-y-2">
+                  <p class="font-semibold text-gray-700">Товары:</p>
+                  @for (product of getProducts(order.orderId); track product.productId) {
+                    <div class="flex justify-between items-center py-2 px-3 bg-white rounded border">
+                      <span>{{ product.productName }}</span>
+                      <span class="text-gray-600">× {{ product.qty }}</span>
+                      <span class="font-semibold">{{ product.amount | currency }}</span>
+                    </div>
+                  }
+                  @if (isExpanded(order.orderId) && getProducts(order.orderId).length === 0) {
+                    <p class="text-gray-500 py-2">Загрузка товаров...</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</ng-container>

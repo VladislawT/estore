@@ -6,7 +6,9 @@ import { Product } from '../types/products.type';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { CartStoreItem } from '../services/cart/cart.storeitem';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { WishlistStoreItem } from '../services/wishlist/wishlist.storeitem';
+import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -19,10 +21,13 @@ export class ProductDetails {
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductsService);
   private readonly cart = inject(CartStoreItem);
+  readonly wishlist = inject(WishlistStoreItem);
 
   readonly product = signal<Product | null>(null);
 
   faShoppingCart = faShoppingCart;
+  faHeart = faHeart;
+  faHeartRegular = faHeartRegular;
 
   constructor() {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -43,6 +48,13 @@ export class ProductDetails {
     const product = this.product();
     if (product) {
       this.cart.addProduct(product);
+    }
+  }
+
+  toggleWishlist() {
+    const product = this.product();
+    if (product) {
+      this.wishlist.toggleProduct(product);
     }
   }
 }

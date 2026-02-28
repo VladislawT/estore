@@ -7,7 +7,18 @@
   } @else {
     @for (product of productsStoreItem.products(); track product.id) {
       <div class="" style="flex-wrap: wrap; min-width: 350px">
-        <div class="mx-4 p-3 mt-4 flex flex-col rounded-lg shadow-md">
+        <div class="mx-4 p-3 mt-4 flex flex-col rounded-lg shadow-md relative">
+          <button
+            type="button"
+            class="absolute top-5 right-5 z-10 p-2 rounded-full bg-white/90 hover:bg-white shadow cursor-pointer transition-colors"
+            (click)="toggleWishlist(product, $event)"
+            [title]="wishlist.isInWishlist(product.id) ? 'Удалить из избранного' : 'Добавить в избранное'"
+          >
+            <fa-icon
+              [icon]="wishlist.isInWishlist(product.id) ? faHeart : faHeartRegular"
+              [style.color]="wishlist.isInWishlist(product.id) ? 'rgb(239, 68, 68)' : ''"
+            ></fa-icon>
+          </button>
           <div class="overflow-hidden rounded-md">
             @defer (on viewport) {
               <a routerLink="/home/product/{{ product.id }}">

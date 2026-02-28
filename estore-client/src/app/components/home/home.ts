@@ -10,6 +10,7 @@ import { ProductsService } from './services/product/products.service';
 import { SerchKeyword } from './types/searchKeyword.type';
 import { RouterOutlet } from '@angular/router';
 import { CartStoreItem } from './services/cart/cart.storeitem';
+import { WishlistStoreItem } from './services/wishlist/wishlist.storeitem';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { UserService } from './user/services/user';
@@ -27,6 +28,7 @@ import { Order } from './services/order/order';
     ProductsService,
     RouterOutlet,
     CartStoreItem,
+    WishlistStoreItem,
     UserService,
     Order,
   ],

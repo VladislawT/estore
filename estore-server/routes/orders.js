@@ -62,8 +62,12 @@ orders.post("/add", checkToken, async (reg, res) => {
 });
 
 orders.get("/allorders", checkToken, async (req, res) => {
-      const { userEmail } = req.body;
+      const userEmail = req.user?.email;
  
+      if (!userEmail) {
+            return res.status(401).json({ message: "User not found in token" });
+      }
+
       try {
             const [users] = await pool
                   .promise()
@@ -103,8 +107,21 @@ orders.get("/allorders", checkToken, async (req, res) => {
 });
 
 orders.get("/orderproducts", checkToken, async (req, res) => {
-      const { orderId } = req.body;
+      const orderId = req.query.orderId;
+      const userId = req.user?.id;
+
+      if (!orderId) {
+            return res.status(400).json({ message: "orderId is required" });
+      }
+
       try {
+            const [orderCheck] = await pool
+                  .promise()
+                  .query("SELECT userId FROM orders WHERE orderId = ?", [orderId]);
+            if (orderCheck.length === 0 || Number(orderCheck[0].userId) !== Number(userId)) {
+                  return res.status(403).json({ message: "Order not found or access denied" });
+            }
+
             const [orderProducts] = await pool
                   .promise()
                   .query(

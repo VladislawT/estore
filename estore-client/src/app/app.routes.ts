@@ -6,6 +6,9 @@ import { ProductDetails } from './components/home/product-details/product-detail
 import { Cart } from './components/home/cart/cart';
 import { UserSignup } from './components/home/user/user-signup/user-signup';
 import { UserLogin } from './components/home/user/user-login/user-login';
+import { OrderHistory } from './components/home/order-history/order-history';
+import { Wishlist } from './components/home/wishlist/wishlist';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,6 +26,15 @@ export const routes: Routes = [
       {
         path: 'cart',
         component: Cart,
+      },
+      {
+        path: 'wishlist',
+        component: Wishlist,
+      },
+      {
+        path: 'orders',
+        component: OrderHistory,
+        canActivate: [authGuard],
       },
       {
         path: 'signup',

@@ -5,12 +5,14 @@ import {
   faUserCircle,
   faShoppingCart,
   faChevronDown,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { CategoriesStoreItem } from '../services/category/categories.storeitem';
 import { SerchKeyword } from '../types/searchKeyword.type';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { CartStoreItem } from '../services/cart/cart.storeitem';
+import { WishlistStoreItem } from '../services/wishlist/wishlist.storeitem';
 import { UserService } from '../user/services/user';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -25,6 +27,7 @@ export class Header {
   faUserCircle = faUserCircle;
   faShoppingCart = faShoppingCart;
   faChevronDown = faChevronDown;
+  faHeart = faHeart;
 
   dropdownVisable = false;
 
@@ -41,6 +44,7 @@ export class Header {
     public categoryStore: CategoriesStoreItem,
     private router: Router,
     public cart: CartStoreItem,
+    public wishlist: WishlistStoreItem,
     public userService: UserService,
   ) {
     this.router.events

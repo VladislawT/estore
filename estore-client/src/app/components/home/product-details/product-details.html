@@ -18,12 +18,28 @@
       <div class="text-sm">Inclusive of all taxes</div>
     </div>
     <div class="text-[1.5em font-semibold text-gray-700]">{{ product()?.product_description }}</div>
-    <button
-      class="flex items-center gap-3 bg-yellow-400 hover: bg-yellow-500 text-black font-semibold py-3 px-3 px-6 rounded-lg transition-colors duration-300 shadow cursor-pointer"
-      (click)="addToCart()"
-    >
-      <fa-icon [icon]="faShoppingCart" class="text-lg"></fa-icon>
-      <span class="text-lg">Добавить в корзину</span>
-    </button>
+    <div class="flex gap-3">
+      <button
+        class="flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow cursor-pointer"
+        (click)="addToCart()"
+      >
+        <fa-icon [icon]="faShoppingCart" class="text-lg"></fa-icon>
+        <span class="text-lg">Добавить в корзину</span>
+      </button>
+      @if (product()) {
+        <button
+          type="button"
+          class="flex items-center gap-2 p-3 rounded-lg border-2 transition-colors cursor-pointer"
+          [class.border-red-500]="wishlist.isInWishlist(product()!.id)"
+          [class.text-red-500]="wishlist.isInWishlist(product()!.id)"
+          [class.border-gray-300]="!wishlist.isInWishlist(product()!.id)"
+          (click)="toggleWishlist()"
+          [title]="wishlist.isInWishlist(product()!.id) ? 'Удалить из избранного' : 'Добавить в избранное'"
+        >
+          <fa-icon [icon]="wishlist.isInWishlist(product()!.id) ? faHeart : faHeartRegular"></fa-icon>
+          <span class="text-lg">{{ wishlist.isInWishlist(product()!.id) ? 'В избранном' : 'В избранное' }}</span>
+        </button>
+      }
+    </div>
   </div>
 </div>
