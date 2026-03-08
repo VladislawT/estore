@@ -1,51 +1,66 @@
 import { Routes } from '@angular/router';
-import { Home } from './components/home/home';
-import { NotFound } from './components/not-found/not-found';
-import { ProductsGallery } from './components/home/products-gallery/products-gallery';
-import { ProductDetails } from './components/home/product-details/product-details';
-import { Cart } from './components/home/cart/cart';
-import { UserSignup } from './components/home/user/user-signup/user-signup';
-import { UserLogin } from './components/home/user/user-login/user-login';
-import { OrderHistory } from './components/home/order-history/order-history';
-import { Wishlist } from './components/home/wishlist/wishlist';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () => import('./components/home/home').then((c) => c.Home),
+    loadComponent: () =>
+      import('./components/home/home').then((c) => c.Home),
     children: [
       {
         path: 'products',
-        component: ProductsGallery,
+        loadComponent: () =>
+          import('./components/home/products-gallery/products-gallery').then(
+            (c) => c.ProductsGallery,
+          ),
       },
       {
         path: 'product/:id',
-        component: ProductDetails,
+        loadComponent: () =>
+          import('./components/home/product-details/product-details').then(
+            (c) => c.ProductDetails,
+          ),
       },
       {
         path: 'cart',
-        component: Cart,
+        loadComponent: () =>
+          import('./components/home/cart/cart').then((c) => c.Cart),
       },
       {
         path: 'wishlist',
-        component: Wishlist,
+        loadComponent: () =>
+          import('./components/home/wishlist/wishlist').then(
+            (c) => c.Wishlist,
+          ),
       },
       {
         path: 'orders',
-        component: OrderHistory,
         canActivate: [authGuard],
+        loadComponent: () =>
+          import('./components/home/order-history/order-history').then(
+            (c) => c.OrderHistory,
+          ),
       },
       {
         path: 'signup',
-        component: UserSignup,
+        loadComponent: () =>
+          import('./components/home/user/user-signup/user-signup').then(
+            (c) => c.UserSignup,
+          ),
       },
       {
         path: 'login',
-        component: UserLogin
-      }
+        loadComponent: () =>
+          import('./components/home/user/user-login/user-login').then(
+            (c) => c.UserLogin,
+          ),
+      },
     ],
   },
   { path: '', redirectTo: '/home/products', pathMatch: 'full' },
-  { path: '**', component: NotFound },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./components/not-found/not-found').then((c) => c.NotFound),
+  },
 ];
