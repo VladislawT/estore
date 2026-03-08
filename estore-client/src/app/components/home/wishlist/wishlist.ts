@@ -8,10 +8,12 @@ import { faHeart, faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-ic
 import { CommonModule } from '@angular/common';
 import { Ratings } from '../../ratings/ratings';
 import { RouterLink } from '@angular/router';
+import { Sidenavigation } from '../sidenavigation/sidenavigation';
+import { ProductsStoreItem } from '../services/product/products.storeitem';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [FontAwesomeModule, CommonModule, Ratings, RouterLink],
+  imports: [FontAwesomeModule, CommonModule, Ratings, RouterLink,Sidenavigation],
   templateUrl: './wishlist.html',
   styleUrl: './wishlist.css',
 })
@@ -24,7 +26,12 @@ export class Wishlist {
     public wishlistStore: WishlistStoreItem,
     private cartStore: CartStoreItem,
     private router: Router,
+    private productsStoreItem: ProductsStoreItem
   ) {}
+
+  onSelectSubcategory(subcategoryid: number): void {
+    this.productsStoreItem.loadProducts({ subcategoryid: subcategoryid });
+  }
 
   removeFromWishlist(product: Product): void {
     this.wishlistStore.removeProduct(product);

@@ -1,5 +1,6 @@
 import { Component, signal, OnInit } from '@angular/core';
-import { Order, OrderSummary, OrderProduct } from '../services/order/order';
+import { Order } from '../services/order/order';
+import { OrderSummary, OrderProduct } from '../types/order.type';
 import { UserService } from '../user/services/user';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
